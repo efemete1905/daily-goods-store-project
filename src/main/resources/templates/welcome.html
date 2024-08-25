@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hoş Geldiniz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f0f2f5; /* Softer background color */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 50px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .card {
+            border: none;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            background: linear-gradient(to right, #77a1d3, #79cbca, #e684ae);
+            color: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .list-group-item {
+            background-color: transparent;
+            color: white;
+            border: none;
+            transition: background-color 0.3s, color 0.3s;
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            clear: both;
+            font-weight: 400;
+            text-align: center;
+        }
+        .list-group-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .btn-primary {
+            background-color: #343a40;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #495057;
+        }
+        h2, h3 {
+            font-weight: 700;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #6c757d;
+        }
+        .dropbtn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .dropbtn img {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+        }
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #2980B9;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {background-color: #ddd;}
+        .show {display:block;}
+    </style>
+</head>
+<body>
+<div class="container p-4">
+    <!-- Profile Dropdown and Search Bar -->
+    <div class="d-flex justify-content-between mb-4">
+        <!-- Search Bar -->
+        <form th:action="@{/searchSuggestions}" method="get" class="dropdown" id="searchForm">
+            <input class="form-control me-2" type="search" name="query" placeholder="Ürün Ara..." aria-label="Search" id="searchInput" th:value="${query}">
+            <div id="searchDropdown" class="dropdown-content">
+                <div th:if="${products != null}">
+                    <ul>
+                        <li th:each="product : ${products}">
+                            <a th:href="@{/product/{productId}(productId=${product.id})}" th:text="${product.name}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+
+        <!-- Profile Dropdown -->
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">
+                <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar"> Profil
+            </button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="pastOrders">Geçmiş Siparişler</a>
+                <a href="#" th:href="@{/logout}">Çıkış Yap</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card text-center mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Hoş Geldiniz!</h2>
+            <p class="card-text" th:if="${username != null}" th:text="'Giriş başarılı, ' + ${username}">Giriş başarılı.</p>
+            <p class="card-text" th:unless="${username != null}">Oturum açık bir kullanıcı bulunamadı.</p>
+            <a th:href="@{/logout}" class="btn btn-primary">Çıkış Yap</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Gıda</h3>
+                    <a href="su-ve-icecek" class="list-group-item list-group-item-action">Su & İçecek</a>
+                    <a href="#" class="list-group-item list-group-item-action">Et, Tavuk & Balık</a>
+                    <a href="#" class="list-group-item list-group-item-action">Meyve & Sebze</a>
+                    <a href="#" class="list-group-item list-group-item-action">Süt Ürünleri</a>
+                    <a href="#" class="list-group-item list-group-item-action">Fırından</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Kişisel Bakım</h3>
+                    <a href="#" class="list-group-item list-group-item-action">Kişisel Bakım</a>
+                    <a href="#" class="list-group-item list-group-item-action">Ev Bakım</a>
+                    <a href="#" class="list-group-item list-group-item-action">Ev & Yaşam</a>
+                    <a href="#" class="list-group-item list-group-item-action">Evcil Hayvan</a>
+                    <a href="#" class="list-group-item list-group-item-action">Bebek</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    // Form submit event listener
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+        var input = document.getElementById("searchInput").value;
+        if (input.trim() === "") {
+            event.preventDefault();
+            alert("Lütfen bir arama terimi girin.");
+        }
+    });
+</script>
+</body>
+</html>
