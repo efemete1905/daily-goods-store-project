@@ -151,11 +151,26 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Gıda</h3>
-                    <a href="su-ve-icecek" class="list-group-item list-group-item-action">Su & İçecek</a>
-                    <a href="#" class="list-group-item list-group-item-action">Et, Tavuk & Balık</a>
-                    <a href="#" class="list-group-item list-group-item-action">Meyve & Sebze</a>
-                    <a href="#" class="list-group-item list-group-item-action">Süt Ürünleri</a>
-                    <a href="#" class="list-group-item list-group-item-action">Fırından</a>
+                    <form th:action="@{/category/{name}(name='su-ve-icecek')}" method="get">
+                        <input type="hidden" name="id" value="1">
+                        <button type="submit" class="list-group-item list-group-item-action">Su & İçecek</button>
+                    </form>
+                    <form th:action="@{/category/{name}(name='et-tavuk-balik')}" method="get">
+                        <input type="hidden" name="id" value="2">
+                        <button type="submit" class="list-group-item list-group-item-action">Et, Tavuk & Balık</button>
+                    </form>
+                    <form th:action="@{/category/{name}(name='meyve-sebze')}" method="get">
+                        <input type="hidden" name="id" value="3">
+                        <button type="submit" class="list-group-item list-group-item-action">Meyve & Sebze</button>
+                    </form>
+                    <form th:action="@{/category/{name}(name='sut-urunleri')}" method="get">
+                        <input type="hidden" name="id" value="4">
+                        <button type="submit" class="list-group-item list-group-item-action">Süt Ürünleri</button>
+                    </form>
+                    <form th:action="@{/category/{name}(name='firindan')}" method="get">
+                        <input type="hidden" name="id" value="5">
+                        <button type="submit" class="list-group-item list-group-item-action">Fırından</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -163,16 +178,32 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Kişisel Bakım</h3>
-                    <a href="#" class="list-group-item list-group-item-action">Kişisel Bakım</a>
-                    <a href="#" class="list-group-item list-group-item-action">Ev Bakım</a>
-                    <a href="#" class="list-group-item list-group-item-action">Ev & Yaşam</a>
-                    <a href="#" class="list-group-item list-group-item-action">Evcil Hayvan</a>
-                    <a href="#" class="list-group-item list-group-item-action">Bebek</a>
+                    <form th:action="@{/category/{name}(name='kisisel-bakim')}" method="get">
+                        <input type="hidden" name="id" value="6">
+                        <button type="submit" class="list-group-item list-group-item-action">Kişisel Bakım</button>
+                    </form>
+                    <form th:action="@{/category/{name}(name='ev-bakim')}" method="get">
+                        <input type="hidden" name="id" value="7">
+                        <button type="submit" class="list-group-item list-group-item-action">Ev Bakım</button>
+                    </form>
+                    <form th:action="@{/category/{name}(name='ev-yasam')}" method="get">
+                        <input type="hidden" name="id" value="8">
+                        <button type="submit" class="list-group-item list-group-item-action">Ev & Yaşam</button>
+                    </form>
+                    <form th:action="@{/category/{name}(name='evcil-hayvan')}" method="get">
+                        <input type="hidden" name="id" value="9">
+                        <button type="submit" class="list-group-item list-group-item-action">Evcil Hayvan</button>
+                    </form>
+                    <form th:action="@{/category/{name}(name='bebek')}" method="get">
+                        <input type="hidden" name="id" value="10">
+                        <button type="submit" class="list-group-item list-group-item-action">Bebek</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
