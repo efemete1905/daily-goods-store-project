@@ -23,10 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -93,7 +90,7 @@ public class LoginController {
         return "welcome"; // Kullanıcı oturumu açıksa "welcome" sayfasını döndürür
     }
 
-    @GetMapping("/su-ve-icecek")
+   /* @GetMapping("/su-ve-icecek")
     public String showSuVeIcecekPage(Model model) {
         List<Product> products = productService.findByCategoryId(1L);// Buradaki categoriden su ve icecekleri aliyoruz
         model.addAttribute("products", products);
@@ -113,6 +110,27 @@ public class LoginController {
 
         return "su-ve-icecek"; // su-ve-icecek.html sayfasını döndürür
 
+    }*/
+
+    @GetMapping("/category/{name}")
+    public String getCategoryById(@RequestParam("id") Long id, @PathVariable("name") String name, Model model) {
+        List<Product> products = productService.findByCategoryId(id);
+        model.addAttribute("products", products);
+        model.addAttribute("categoryName", name);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        String logMessage = "Goes to the " + name + " category, user: " + username;
+
+        // Create a Log entity
+        Log logEntry = new Log();
+        logEntry.setTimestamp(LocalDateTime.now());
+        logEntry.setLogLevel("INFO");
+        logEntry.setMessage(logMessage);
+
+        // Save the Log entry to the database
+        logService.save(logEntry, username);
+
+        return "category"; // Return the view name dynamically based on the category name
     }
 
 
